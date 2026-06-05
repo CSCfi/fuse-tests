@@ -19,9 +19,9 @@ echo "squashfuse_ll fresh"
 julia read_files.jl /tmp/tollande/squashfs_fuse 10000
 echo "squashfuse_ll cached"
 julia read_files.jl /tmp/tollande/squashfs_fuse 10000
-echo "lustre fresh"
+echo "lustre scratch fresh"
 julia read_files.jl ./squashfs_lustre 10000
-echo "lustre cached"
+echo "lustre scratch cached"
 julia read_files.jl ./squashfs_lustre 10000
 
 # cleanup
