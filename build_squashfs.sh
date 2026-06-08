@@ -23,4 +23,4 @@ done
 mksquashfs "$stage" "gzip.sqfs" -all-root -no-xattrs -noappend -b 128K -comp gzip
 mksquashfs "$stage" "zstd.sqfs" -all-root -no-xattrs -noappend -b 128K -comp zstd
 mksquashfs "$stage" "lz4.sqfs" -all-root -no-xattrs -noappend -b 128K -comp lz4
-mksquashfs "$stage" "nocomp.sqfs" -all-root -no-xattrs -noappend -b 128K -noI -noD -noF -noX -no-fragments
+mksquashfs "$stage" "nocompression.sqfs" -all-root -no-xattrs -noappend -b 128K -noI -noD -noF -noX -no-fragments
