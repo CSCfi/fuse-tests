@@ -9,5 +9,5 @@ Create squashfs
 Run benchmark:
 
 ```bash
-srun --account project_2001659 --partition=interactive --time=0:05:00 --nodes=1 --ntasks-per-node=1 --cpus-per-task=1 --mem 8000 --pty ./run_read.sh
+./run_read.sh
 ```
