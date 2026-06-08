@@ -24,7 +24,7 @@ if abspath(PROGRAM_FILE) == @__FILE__
         ("gzip.sqfs", "/tmp/tollande/squashfs_fuse_gzip"),
     ]
 
-    run(`unsquashfs -dest /tmp/tollande/squashfs_tmp nocomp.sqfs`)
+    run(`unsquashfs -dest /tmp/tollande/squashfs_tmp nocompression.sqfs`)
     println("/tmp fresh")
     @time read_files("/tmp/tollande/squashfs_tmp", order)
     println("/tmp cached")
@@ -42,7 +42,7 @@ if abspath(PROGRAM_FILE) == @__FILE__
         rm(mountpoint)
     end
 
-    run(`unsquashfs -dest /scratch/project_2001659/squashfs_lustre nocomp.sqfs`)
+    run(`unsquashfs -dest /scratch/project_2001659/squashfs_lustre nocompression.sqfs`)
     println("lustre scratch fresh")
     @time read_files("/scratch/project_2001659/squashfs_lustre", order)
     println("lustre scratch cached")
