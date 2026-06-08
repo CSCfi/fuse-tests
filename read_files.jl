@@ -17,20 +17,20 @@ if abspath(PROGRAM_FILE) == @__FILE__
     # precompile function
     read_files("non-existent", Int[])
 
-    foo = [
-        ("nocompression.sqfs", "/tmp/tollande/squashfs_fuse"),
-        ("lz4.sqfs", "/tmp/tollande/squashfs_fuse_lz4"),
-        ("zstd.sqfs", "/tmp/tollande/squashfs_fuse_zstd"),
-        ("gzip.sqfs", "/tmp/tollande/squashfs_fuse_gzip"),
-    ]
-
-    run(`unsquashfs -dest /tmp/tollande/squashfs_tmp nocompression.sqfs`)
+    tmp_root = mktempdir()
+    run(`unsquashfs -dest $tmp_root/squashfs_tmp nocompression.sqfs`)
     println("/tmp fresh")
-    @time read_files("/tmp/tollande/squashfs_tmp", order)
+    @time read_files("$tmp_root/squashfs_tmp", order)
     println("/tmp cached")
-    @time read_files("/tmp/tollande/squashfs_tmp", order)
-    rm("/tmp/tollande/squashfs_tmp", force=true)
+    @time read_files("$tmp_root/squashfs_tmp", order)
+    #rm("/tmp/tollande/squashfs_tmp", force=true)
 
+    foo = [
+        ("nocompression.sqfs", "$tmp_root/squashfs_fuse"),
+        ("lz4.sqfs", "$tmp_root/squashfs_fuse_lz4"),
+        ("zstd.sqfs", "$tmp_root/squashfs_fuse_zstd"),
+        ("gzip.sqfs", "$tmp_root/squashfs_fuse_gzip"),
+    ]
     for (sqfs_file, mountpoint) in foo
         mkpath(mountpoint)
         run(`squashfuse_ll $sqfs_file $mountpoint`)
@@ -39,13 +39,14 @@ if abspath(PROGRAM_FILE) == @__FILE__
         println("squashfuse_ll cached $sqfs_file")
         @time read_files(mountpoint, order)
         run(`fusermount -u $mountpoint`)
-        rm(mountpoint)
+        #rm(mountpoint)
     end
 
-    run(`unsquashfs -dest /scratch/project_2001659/squashfs_lustre nocompression.sqfs`)
+    lustre_root = mktempdir("/scratch/project_2001659")
+    run(`unsquashfs -dest $lustre_root/squashfs_lustre nocompression.sqfs`)
     println("lustre scratch fresh")
-    @time read_files("/scratch/project_2001659/squashfs_lustre", order)
+    @time read_files("$lustre_root/squashfs_lustre", order)
     println("lustre scratch cached")
-    @time read_files("/scratch/project_2001659/squashfs_lustre", order)
-    rm("/scratch/project_2001659/squashfs_lustre", force=true)
+    @time read_files("$lustre_root/squashfs_lustre", order)
+    #rm("/scratch/project_2001659/squashfs_lustre", force=true)
 end
