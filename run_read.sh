@@ -10,8 +10,11 @@ module load julia
 # setup
 mkdir -p /tmp/tollande/squashfs_fuse
 squashfuse_ll nocomp.sqfs /tmp/tollande/squashfs_fuse
+mkdir -p /tmp/tollande/squashfs_fuse_gzip
 squashfuse_ll gzip.sqfs /tmp/tollande/squashfs_fuse_gzip
+mkdir -p /tmp/tollande/squashfs_fuse_lz4
 squashfuse_ll lz4.sqfs /tmp/tollande/squashfs_fuse_lz4
+mkdir -p /tmp/tollande/squashfs_fuse_zstd
 squashfuse_ll zstd.sqfs /tmp/tollande/squashfs_fuse_zstd
 
 unsquashfs -dest /tmp/tollande/squashfs_tmp nocomp.sqfs > /dev/null

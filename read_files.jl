@@ -23,10 +23,10 @@ if abspath(PROGRAM_FILE) == @__FILE__
     println("/tmp cached")
     @time read_files("/tmp/tollande/squashfs_tmp", order)
 
-    println("squashfuse_ll nocomp fresh")
+    println("squashfuse_ll no-compression fresh")
     @time read_files("/tmp/tollande/squashfs_fuse", order)
 
-    println("squashfuse_ll nocomp cached")
+    println("squashfuse_ll no-compression cached")
     @time read_files("/tmp/tollande/squashfs_fuse", order)
 
     println("squashfuse_ll lz4 fresh")
