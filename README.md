@@ -1,17 +1,14 @@
-# FUSE performance
+# FUSE tests
 
 Install tests:
 
 ```bash
 mkdir -p /scratch/project_2001659/$USER
 cd /scratch/project_2001659/$USER
+git clone https://github.com/CSCfi/fuse-tests
 ```
 
-```bash
-git clone https://github.com/CSCfi/fuse-performance
-```
-
-## Read Small Files
+## Performance of reading lots of small files
 
 Test performance of reading lot of small files from FUSE mounted squashfs.
 
