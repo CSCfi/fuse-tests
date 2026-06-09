@@ -2,7 +2,7 @@ using Random
 
 function read_files(dir::AbstractString, order::Vector{Int})
     for i in order
-        io = open(joinpath(dir, "$i"), "r")
+        io = open(joinpath(dir, string(i)), "r")
         read(io)
         close(io)
     end
