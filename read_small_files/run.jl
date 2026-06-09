@@ -19,32 +19,33 @@ if abspath(PROGRAM_FILE) == @__FILE__
 
     tmp_root = mktempdir()
 
-    run(`unsquashfs -dest $tmp_root/tmp nocompression.sqfs`)
-    println("/tmp fresh")
-    @time read_files("$tmp_root/tmp", order)
-    println("/tmp cached")
-    @time read_files("$tmp_root/tmp", order)
+    tmp_dir = joinpath(tmp_root, "tmp")
+    run(`unsquashfs -dest $tmp_dir nocompression.sqfs`)
+    println("$tmp_dir fresh")
+    @time read_files(tmp_dir, order)
+    println("$tmp_dir cached")
+    @time read_files(tmp_dir, order)
 
     file_mp = [
-        ("nocompression.sqfs", "$tmp_root/fuse_squashfs_nocompression"),
-        ("lz4.sqfs", "$tmp_root/fuse_squashfs_lz4"),
-        ("zstd.sqfs", "$tmp_root/fuse_squashfs_zstd"),
-        ("gzip.sqfs", "$tmp_root/fuse_squashfs_gzip"),
+        (abspath("nocompression.sqfs"), joinpath(tmp_root, "fuse_squashfs_nocompression")),
+        (abspath("lz4.sqfs"), joinpath(tmp_root, "fuse_squashfs_lz4")),
+        (abspath("zstd.sqfs"), joinpath(tmp_root, "fuse_squashfs_zstd")),
+        (abspath("gzip.sqfs"), joinpath(tmp_root, "fuse_squashfs_gzip")),
     ]
     for (sqfs_file, mountpoint) in file_mp
         mkpath(mountpoint)
         run(`squashfuse_ll $sqfs_file $mountpoint`)
-        println("squashfuse_ll fresh $sqfs_file")
+        println("$sqfs_file via squashfuse_ll fresh")
         @time read_files(mountpoint, order)
-        println("squashfuse_ll cached $sqfs_file")
+        println("$sqfs_file via squashfuse_ll cached")
         @time read_files(mountpoint, order)
         run(`fusermount -u $mountpoint`)
     end
 
-    lustre_root = mktempdir("/scratch/project_2001659")
-    run(`unsquashfs -dest $lustre_root/lustre nocompression.sqfs`)
-    println("lustre scratch fresh")
-    @time read_files("$lustre_root/lustre", order)
-    println("lustre scratch cached")
-    @time read_files("$lustre_root/lustre", order)
+    lustre_scratch_dir = mktempdir("/scratch/project_2001659")
+    run(`unsquashfs -dest $lustre_scratch_dir nocompression.sqfs`)
+    println("$lustre_scratch_dir fresh")
+    @time read_files(lustre_scratch_dir, order)
+    println("$lustre_scratch_dir cached")
+    @time read_files(lustre_scratch_dir, order)
 end
