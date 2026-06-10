@@ -20,11 +20,11 @@ Create squashfs:
 
 ```bash
 module load julia
-julia build_squashfs.jl 10000
+julia build_files.jl 10000
 ```
 
 Run benchmark:
 
 ```bash
-./run.sh
+./run.sh 10000
 ```

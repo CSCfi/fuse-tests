@@ -3,5 +3,5 @@ sbatch --account project_2001659 --partition=interactive --time=0:05:00 --nodes=
 #!/bin/bash
 module purge
 module load julia
-julia run.jl 10000
+julia run.jl "$1"
 BASH
