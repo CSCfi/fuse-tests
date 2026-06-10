@@ -54,10 +54,11 @@ if abspath(PROGRAM_FILE) == @__FILE__
 
     ext4_mp = joinpath(tmp_dir, "fuse_ext4")
     mkpath(ext4_mp)
-    run(`fuse2fs $(abspath("ext4.img")) $ext4_mp -o ro,fakeroot`)
-    println("ext4.img via fuse2fs fresh")
+    ext4_img = abspath("ext4.img")
+    run(`fuse2fs $ext4_img $ext4_mp -o ro,fakeroot`)
+    println("$ext4_img via fuse2fs fresh")
     @time read_files(ext4_mp, order)
-    println("ext4.img via fuse2fs cached")
+    println("$ext4_img via fuse2fs cached")
     @time read_files(ext4_mp, order)
     run(`fusermount -u $ext4_mp`)
 end
