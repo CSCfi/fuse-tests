@@ -27,6 +27,8 @@ function main()
         run(`mksquashfs $stage zstd.sqfs -all-root -no-xattrs -noappend -b 128K -comp zstd`)
         run(`mksquashfs $stage lz4.sqfs -all-root -no-xattrs -noappend -b 128K -comp lz4`)
         run(`mksquashfs $stage nocompression.sqfs -all-root -no-xattrs -noappend -b 128K -noI -noD -noF -noX -no-fragments`)
+
+        # TODO: create ext4 image with files from $stage
     finally
         rm(stage; force=true, recursive=true)
     end
