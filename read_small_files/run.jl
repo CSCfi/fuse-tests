@@ -52,7 +52,7 @@ if abspath(PROGRAM_FILE) == @__FILE__
     println("$lustre_scratch_dir cached")
     @time read_files(lustre_scratch_dir, order)
 
-    ext4_mp = joinpath(lustre_scratch_tmp, "fuse_ext4")
+    ext4_mp = joinpath(tmp_dir, "fuse_ext4")
     mkpath(ext4_mp)
     run(`fuse2fs $(abspath("ext4.img")) $ext4_mp -o ro,fakeroot`)
     println("ext4.img via fuse2fs fresh")
