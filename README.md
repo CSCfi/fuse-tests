@@ -28,3 +28,25 @@ Run benchmark:
 ```bash
 ./run.sh 10000
 ```
+
+## Performance of writing lots of small files
+
+Test performance of writing lots of small files, comparing Lustre scratch
+against a `fuse2fs` mounted ext4 image.
+
+```bash
+cd write_small_files
+```
+
+Create the ext4 image:
+
+```bash
+module load julia
+julia build_files.jl 10000
+```
+
+Run benchmark:
+
+```bash
+./run.sh 10000
+```

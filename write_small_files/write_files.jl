@@ -1,9 +1,13 @@
 using Random
 
-function write_files(dir::AbstractString, N::Integer, buf::Vector{UInt8})
+function write_files(dir::AbstractString, N::Integer, buf::Vector{UInt8}; fsync::Bool=false)
     for i in 1:N
         io = open(joinpath(dir, "$i"), "w")
         write(io, buf)
+        if fsync
+            flush(io)
+            ccall(:fsync, Cint, (Cint,), fd(io))
+        end
         close(io)
     end
     return nothing
